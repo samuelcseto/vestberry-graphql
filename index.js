@@ -7,7 +7,6 @@ const models = require('./models')
 const { getIntrospectionQuery } = require('graphql')
 
 async function main() {
-
 	await models.sequelize.sync({ force: true })
 
 	const genres = await models.genre.bulkCreate([{ name: 'Fantasy' }, { name: 'Sci-Fi' }, { name: 'Romance' }, { name: 'Mystery' }, { name: 'Thriller' }, { name: 'Horror' }, { name: 'Drama' }, { name: 'Biography' }, { name: 'History' }, { name: 'Western' }])
@@ -26,8 +25,7 @@ async function main() {
 		year: 1993,
 		rating: 5,
 	})
-  await book2.addGenres(genres.slice(3, 6))
-
+	await book2.addGenres(genres.slice(3, 6))
 
 	// The ApolloServer constructor requires two parameters: your schema
 	// definition and your set of resolvers.
@@ -37,7 +35,7 @@ async function main() {
 		csrfPrevention: true,
 		cache: 'bounded',
 		context: async ({ req }) => {
-      let user = await getUser(req.headers.authorization.split(" ")[1] || '')
+			let user = await getUser(req.headers.authorization.split(' ')[1] || '')
 			return { user, db: models }
 		},
 	})
@@ -50,11 +48,11 @@ async function main() {
 
 main()
 
-let getUser = async function(token) {
-  try {
-    let decoded = jwt.verify(token, 'SECRET_KEY')
-    return await models.user.findByPk(decoded.id)
-  } catch (err) {
-    console.log(err)
-  }
+let getUser = async function (token) {
+	try {
+		let decoded = jwt.verify(token, 'SECRET_KEY')
+		return await models.user.findByPk(decoded.id)
+	} catch (err) {
+		console.log(err)
+	}
 }
