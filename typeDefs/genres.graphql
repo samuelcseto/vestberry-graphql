@@ -1,0 +1,16 @@
+extend type Query {
+	genres: [Genre]
+}
+
+extend type Mutation {
+	addGenre(name: String): Genre
+}
+
+type Genre {
+	id: ID!
+	name: String
+}
+
+input GenreInput {
+	name: String
+}

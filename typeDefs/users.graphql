@@ -1,0 +1,34 @@
+extend type Mutation {
+	registerUser(user: UserRegisterInput): RegisterUserMutationResponse
+	loginUser(user: UserLoginInput): LoginUserMutationResponse
+}
+
+type User {
+	id: ID!
+	username: String!
+	password: String
+}
+
+type RegisterUserMutationResponse implements MutationResponse {
+	success: Boolean!
+	message: String!
+	userId: Int
+}
+
+type LoginUserMutationResponse implements MutationResponse {
+	success: Boolean!
+	message: String!
+	userId: Int
+	token: String
+}
+
+# Separate register/login inputs for future user information that's not required when logging in
+input UserRegisterInput {
+	username: String!
+	password: String!
+}
+
+input UserLoginInput {
+	username: String
+	password: String
+}

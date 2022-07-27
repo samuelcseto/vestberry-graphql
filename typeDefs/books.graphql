@@ -1,0 +1,55 @@
+extend type Query {
+	books(limit: Int, page: Int): [Book]
+	findBooksByAuthor(author: String): [Book]
+	findBooksByTitle(title: String): [Book]
+}
+
+extend type Mutation {
+	createBook(book: BookInput): CreateBookMutationResponse
+	updateBook(id: ID!, book: BookInput): UpdateBookMutationResponse
+	deleteBook(id: ID!): DeleteBookMutationResponse
+}
+
+type Book {
+	id: ID!
+	title: String
+	author: String
+	year: Int
+	genres: [Genre]
+	rating: Int
+	history: [BookHistory]
+}
+
+type BookHistory {
+	title: String
+	author: String
+	year: Int
+	genres: [String]
+	rating: Int
+}
+
+type CreateBookMutationResponse implements MutationResponse {
+	success: Boolean!
+	message: String!
+	book: Book
+}
+
+type UpdateBookMutationResponse implements MutationResponse {
+	success: Boolean!
+	message: String!
+	book: Book
+}
+
+type DeleteBookMutationResponse implements MutationResponse {
+	success: Boolean!
+	message: String!
+	deletedBookId: ID
+}
+
+input BookInput {
+	title: String
+	author: String
+	year: Int
+	rating: Int
+	genres: [GenreInput]
+}
